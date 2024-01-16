@@ -1,17 +1,18 @@
 // ignore_for_file: file_names, use_build_context_synchronously
 import 'package:e_commerce/controller/cart_controller.dart';
+import 'package:e_commerce/controller/token_controller.dart';
 import 'package:e_commerce/service/auth_http_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:email_validator/email_validator.dart';
-import 'package:get_storage/get_storage.dart';
 
 class AuthController extends GetxController {
+  final TokenController _tokenController = Get.put(TokenController());
+  final CartController _cartController = Get.put(CartController());
   final loginFormKey = GlobalKey<FormState>();
   final registerFormKey = GlobalKey<FormState>();
   RxBool isVisible = true.obs;
   var isLoading = true.obs;
-  RxString token = ''.obs;
   TextEditingController passwordText = TextEditingController();
   TextEditingController emailText = TextEditingController();
 
@@ -21,7 +22,7 @@ class AuthController extends GetxController {
   @override
   void onInit() {
     // Initialize the controller
-    readTokenFromStorage();
+    _tokenController.readTokenFromStorage();
     super.onInit();
   }
 
@@ -68,9 +69,6 @@ class AuthController extends GetxController {
       isLoading(false);
       String? isLoggedIn = await AuthService.login(email, password);
       if (isLoggedIn == null) {
-        //Refresh cart In case user use two account in one phone
-        CartController().fetchProductInCart(forceRefresh: true);
-        CartController().clearCart();
         // Navigate to the home page on successful login
         Get.toNamed('homepage');
       } else {
@@ -120,20 +118,10 @@ class AuthController extends GetxController {
     );
   }
 
-  void readTokenFromStorage() {
-    final box = GetStorage();
-    token.value = box.read<String>('authToken') ?? '';
-  }
-
-  void updateToken(String newToken) {
-    final box = GetStorage();
-    box.write('authToken', newToken);
-    token.value = newToken;
-  }
-
-  void clearToken() {
-    final box = GetStorage();
-    box.remove('authToken');
-    token.value = '';
+  void handleLogout() {
+    // Clear cart data
+    _cartController.clearCart();
+    // Other logout logic
+    AuthService.logout();
   }
 }

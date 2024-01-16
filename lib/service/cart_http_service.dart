@@ -1,22 +1,18 @@
 // ignore_for_file: avoid_print
 
 import 'dart:convert';
-import 'package:e_commerce/controller/authentication_controller.dart';
 import 'package:e_commerce/models/cart_model.dart';
 import 'package:e_commerce/models/product_model.dart';
-import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:e_commerce/config/env.dart';
 
 class CartHttpService {
-  static final AuthController authController = Get.find<AuthController>();
-  static final String haveAndValidToken = authController.token.value.toString();
-  static Future<String?> addToCart(ProductData product, int quantity) async {
+  static Future<String?> addToCart(ProductData product, int quantity, String token) async {
     try {
       final response = await http.post(
         Uri.parse('${AppConfig.apiURL}/api/cart/'),
         headers: {
-          'Authorization': 'Bearer $haveAndValidToken',
+          'Authorization': 'Bearer $token',
           'Accept': 'application/vnd.api+json',
           'Content-Type': 'application/vnd.api+json',
         },
@@ -39,12 +35,12 @@ class CartHttpService {
     }
   }
 
-  static Future<List<CartData>?> fetchProductInCart() async {
+  static Future<List<CartData>?> fetchProductInCart(String token) async {
     try {
       final response = await http.get(
         Uri.parse('${AppConfig.apiURL}/api/cart'),
         headers: {
-          'Authorization': 'Bearer $haveAndValidToken',
+          'Authorization': 'Bearer $token',
           'Accept': 'application/vnd.api+json',
           'Content-Type': 'application/vnd.api+json',
         },

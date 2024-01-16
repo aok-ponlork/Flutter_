@@ -1,55 +1,30 @@
-// ignore_for_file: unused_element, avoid_print
+// ignore_for_file: unused_element, avoid_print, no_leading_underscores_for_local_identifiers
 
-import 'package:e_commerce/controller/authentication_controller.dart';
+import 'package:e_commerce/components/empty_cart.dart';
 import 'package:e_commerce/controller/cart_controller.dart';
+import 'package:e_commerce/controller/token_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:lottie/lottie.dart';
 
 class CartPage extends StatelessWidget {
   const CartPage({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(CartController());
-    final authController = Get.find<AuthController>();
-
+    final CartController controller = Get.put(CartController());
+    final TokenController _tokenController = Get.put(TokenController());
     return Obx(() {
-      final hasToken = authController.token.value.isEmpty;
-
-      if (!hasToken) {
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          // Display your dialog or navigate to login
-          // (Note: This part is currently missing in your code)
-        });
+      final hasToken = _tokenController.token.value.isEmpty;
+      if (hasToken) {
+        return const EmptyCart();
       }
-
       if (controller.isLoading.value) {
         return const Center(
           child: CircularProgressIndicator(),
         );
       } else if (controller.carts.isEmpty) {
-        return Center(
+        return  Center(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Lottie.asset(
-                'lib/animation/empty_cart_animation.json',
-                width: 300,
-                height: 300,
-                onLoaded: (composition) {
-                  // Animation is loaded successfully.
-                },
-                onWarning: (dynamic error) {
-                  print('Error loading Lottie animation: $error');
-                  // Handle error loading animation
-                },
-              ),
-              const Text(
-                'Your cart is empty',
-                style: TextStyle(fontSize: 18),
-              ),
-            ],
+            children: [const EmptyCart(), Text('${controller.carts.length}')],
           ),
         );
       } else {

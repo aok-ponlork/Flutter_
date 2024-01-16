@@ -15,6 +15,7 @@ class ShopPage extends StatelessWidget {
     final CartController cartController = Get.put(CartController());
     final ProductController productController = Get.put(ProductController());
     final CategoryController categoryController = Get.put(CategoryController());
+
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -96,11 +97,12 @@ class ShopPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text(
-                    'Best Sell',
+                    'Porpula',
                     style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                        color: Colors.black87),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                      color: Colors.black87,
+                    ),
                   ),
                   Text(
                     'See all',

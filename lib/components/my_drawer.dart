@@ -1,15 +1,15 @@
-// ignore_for_file: use_key_in_widget_constructors
+// ignore_for_file: use_key_in_widget_constructors, no_leading_underscores_for_local_identifiers
 import 'package:e_commerce/controller/authentication_controller.dart';
-import 'package:e_commerce/controller/cart_controller.dart';
-import 'package:e_commerce/service/auth_http_service.dart';
+import 'package:e_commerce/controller/token_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class MainDrawer extends StatelessWidget {
   const MainDrawer({Key? key});
-
   @override
   Widget build(BuildContext context) {
+    final TokenController _tokenController = Get.put(TokenController());
+    final AuthController _authController = Get.put(AuthController());
     return Drawer(
       backgroundColor: Colors.grey[850],
       child: Column(
@@ -62,40 +62,38 @@ class MainDrawer extends StatelessWidget {
               ),
             ],
           ),
-          Padding(
-            padding: const EdgeInsets.all(25),
-            child: ListTile(
-              leading: AuthController().token.value.isEmpty
-                  ? const Icon(
-                      Icons.logout_outlined,
-                      color: Colors.white,
-                    )
-                  : const Icon(
-                      Icons.login,
-                      color: Colors.white,
-                    ),
-              title: AuthController().token.value.isEmpty
-                  ? const Text(
-                      'Logout',
-                      style: TextStyle(color: Colors.white),
-                    )
-                  : const Text(
-                      'Login',
-                      style: TextStyle(color: Colors.white),
-                    ),
-              onTap: () {
-                Navigator.pop(context);
-                if (AuthController().token.value.isEmpty) {
-                  // Handle logout
-                  CartController().handleAuthenticationStateChange();
-                  AuthService.logout();
-                } else {
-                  // Handle login
-                  Get.toNamed('/login');
-                }
-              },
-            ),
-          )
+          Obx(() => Padding(
+                padding: const EdgeInsets.all(25),
+                child: ListTile(
+                  leading: _tokenController.token.value.isNotEmpty
+                      ? const Icon(
+                          Icons.logout_outlined,
+                          color: Colors.white,
+                        )
+                      : const Icon(
+                          Icons.login,
+                          color: Colors.white,
+                        ),
+                  title: _tokenController.token.value.isNotEmpty
+                      ? const Text(
+                          'Logout',
+                          style: TextStyle(color: Colors.white),
+                        )
+                      : const Text(
+                          'Login',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                  onTap: () {
+                    if (_tokenController.token.value.isNotEmpty) {
+                      // Handle logout
+                      _authController.handleLogout();
+                    } else {
+                      // Handle login
+                      Get.toNamed('/login');
+                    }
+                  },
+                ),
+              ))
         ],
       ),
     );
