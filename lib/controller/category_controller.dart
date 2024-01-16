@@ -20,6 +20,7 @@ class CategoryController extends GetxController {
       isLoading(true);
       var category = await HttpService.fetchCategory();
       categoryList.value = category;
+      print('Hello Lorkz');
     } finally {
       isLoading(false);
     }

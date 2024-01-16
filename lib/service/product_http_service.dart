@@ -1,8 +1,11 @@
+// ignore_for_file: non_constant_identifier_names, avoid_print
+
 import 'dart:convert';
 
 import 'package:e_commerce/config/env.dart';
 import 'package:e_commerce/models/category_model.dart';
 import 'package:e_commerce/models/product_model.dart';
+import 'package:e_commerce/models/single_product_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:get_storage/get_storage.dart';
 
@@ -28,14 +31,18 @@ class HttpService {
       if (response.statusCode == 200) {
         // Parse the JSON response.
         final jsonData = json.decode(response.body);
-        final products = Products.fromJson(jsonData);
 
-        if (products.data != null) {
-          // Return the list of products if available.
-          return products.data!;
+        if (jsonData['data'] != null) {
+          // Extract the list of products from the "data" key.
+          List<ProductData> products = [];
+          for (var productJson in jsonData['data']) {
+            products.add(ProductData.fromJson(productJson));
+          }
+
+          return products;
         } else {
-          // Throw an exception if no products are found in the response.
-          throw Exception('No products found in the response.');
+          // Return an empty list if no products are found in the response.
+          return [];
         }
       } else {
         // Throw an exception if the API request fails.
@@ -60,6 +67,33 @@ class HttpService {
       return categoryList;
     } else {
       throw Exception();
+    }
+  }
+
+  static Future<SingleProduct> fetchProductByID(int product_id) async {
+    try {
+      // Send a GET request to the API endpoint.
+      final response = await http.get(
+        Uri.parse('${AppConfig.apiURL}/api/product-by-id/$product_id'),
+        headers: {
+          'Accept': 'application/vnd.api+json',
+          'Content-Type': 'application/vnd.api+json',
+        },
+      );
+      if (response.statusCode == 200) {
+        // Parse the JSON response.
+        final jsonData = json.decode(response.body);
+        final product = SingleProduct.fromJson(jsonData);
+        return product;
+      } else {
+        // Throw an exception if the API request fails.
+        print('Failed to fetch product: ${response.statusCode}');
+        throw Exception('Failed to fetch product: ${response.statusCode}');
+      }
+    } catch (e) {
+      // Throw an exception for any error during the fetch process.
+      print('Error during fetching product: $e');
+      throw Exception('Error during fetching product: $e');
     }
   }
 }
