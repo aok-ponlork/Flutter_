@@ -90,4 +90,36 @@ class CartHttpService {
       return false;
     }
   }
+
+  static Future<bool> incrementOrDecrement(
+      String id, String action, String token) async {
+    try {
+      final response = await http.post(
+        Uri.parse('${AppConfig.apiURL}/api/cart/$action'),
+        headers: {
+          'Authorization': 'Bearer $token',
+          'Accept': 'application/vnd.api+json',
+          'Content-Type': 'application/vnd.api+json',
+        },
+        body: jsonEncode({
+          'cart_id': id,
+        }),
+      );
+
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        // Success: 200-299 status codes
+        print('${AppConfig.apiURL}/api/cart/$action');
+        return true;
+      } else {
+        // Handle non-success status codes
+        print('Failed to do $action item on cart: ${response.statusCode}');
+        print('Response body: ${response.body}');
+        return false;
+      }
+    } catch (e) {
+      // Handle exceptions
+      print('Error $action item from cart: $e');
+      return false;
+    }
+  }
 }

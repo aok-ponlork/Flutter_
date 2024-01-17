@@ -1,5 +1,4 @@
 // ignore_for_file: non_constant_identifier_names
-
 import 'package:e_commerce/controller/cart_controller.dart';
 import 'package:e_commerce/models/single_product_model.dart';
 import 'package:e_commerce/service/product_http_service.dart';
@@ -91,16 +90,23 @@ class ProductCartInCart extends StatelessWidget {
                   IconButton(
                     icon: const Icon(Icons.remove),
                     color: Colors.red,
-                    onPressed: () {},
+                    onPressed: () {
+                      if (cartController.getQuantityByCartId(int.parse(cart_id)) > 1) {
+                        cartController.incrementOrDecrementQuantity(cart_id, 'decrement');
+                      }
+                    },
                   ),
-                  const Text(
-                    "0",
-                    style: TextStyle(color: Colors.black54),
+                  Text(
+                    '${cartController.getQuantityByCartId(int.parse(cart_id))}',
+                    style: const TextStyle(color: Colors.black54),
                   ),
                   IconButton(
                     icon: const Icon(Icons.add),
                     color: Colors.green,
-                    onPressed: () {},
+                    onPressed: () {
+                      cartController.incrementOrDecrementQuantity(
+                          cart_id, 'increment');
+                    },
                   ),
                   IconButton(
                     icon: const Icon(Icons.delete),

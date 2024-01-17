@@ -26,7 +26,7 @@ class ProductTile extends StatelessWidget {
               placeholder: (context, url) => const CircularProgressIndicator(
                 color: Colors.amber,
               ),
-              imageUrl: products.attributes?.image.toString() ?? '',
+              imageUrl: products.attributes?.image.toString() ?? 'lib/images/default-product-image.png',
               errorWidget: (context, url, error) => Image.asset(
                 'lib/images/default-product-image.png',
                 width: 250,

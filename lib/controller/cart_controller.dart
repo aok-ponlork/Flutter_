@@ -1,6 +1,8 @@
 // ignore_for_file: avoid_print, non_constant_identifier_names
 import 'package:e_commerce/controller/token_controller.dart';
+import 'package:e_commerce/models/cart_model.dart';
 import 'package:e_commerce/models/product_model.dart';
+import 'package:e_commerce/models/single_product_model.dart';
 import 'package:e_commerce/service/cart_http_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -112,6 +114,46 @@ class CartController extends GetxController {
     } finally {
       isLoading(false);
     }
+  }
+
+  void incrementOrDecrementQuantity(String cart_id, String action) async {
+    try {
+      // Set loading state to true before making the API call
+      isLoading(true);
+      // Make the API call to increment or decrement the quantity
+      final response = await CartHttpService.incrementOrDecrement(
+        cart_id,
+        action,
+        _tokenController.token.value,
+      );
+      // If the API call is successful, fetch the updated cart data
+      if (response) {
+        fetchProductInCart();
+      }
+    } catch (e) {
+      // Handle errors, print or log the error for debugging
+      print('Error $action Data $e');
+    } finally {
+      // Set loading state to false regardless of the outcome
+      isLoading(false);
+    }
+  }
+
+  double calculateTotal(SingleProduct product, int cartId) {
+    // Assuming product price is available in product.data?.attributes?.price
+    double productPrice = product.data?.attributes?.price ?? 0.0;
+    // Get the quantity from your carts list based on the cartId
+    int quantity = getQuantityByCartId(cartId);
+    // Calculate the total price
+    double total = productPrice * quantity;
+    return total;
+  }
+
+  int getQuantityByCartId(int cartId) {
+    // Assuming carts is a list of CartData objects
+    CartData? cartItem =
+        carts.firstWhere((item) => item.id == cartId, orElse: () => null);
+    return cartItem?.quantity ?? 0;
   }
 
   void clearCart() {
