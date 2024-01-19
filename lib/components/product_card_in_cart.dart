@@ -10,7 +10,9 @@ class ProductCartInCart extends StatelessWidget {
   final int productId;
   final String cart_id;
   const ProductCartInCart(
-      {Key? key, required this.productId, required this.cart_id})
+      {Key? key,
+      required this.productId,
+      required this.cart_id,})
       : super(key: key);
 
   @override
@@ -40,84 +42,92 @@ class ProductCartInCart extends StatelessWidget {
           );
         } else {
           SingleProduct product = snapshot.data!;
-          return Card(
-            elevation: 4,
-            margin: const EdgeInsets.all(8),
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: [
-                  CachedNetworkImage(
-                    placeholder: (context, url) =>
-                        const CircularProgressIndicator(
-                      color: Colors.amber,
-                    ),
-                    imageUrl: product.data?.attributes?.image.toString() ?? '',
-                    errorWidget: (context, url, error) => Image.asset(
-                      'lib/images/default-product-image.png',
-                      width: 40,
-                      height: 40,
-                    ),
-                    width: 40,
-                    height: 40,
-                  ),
-                  const SizedBox(width: 20),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          product.data?.attributes?.productName ??
-                              'Unknown Product',
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14,
-                          ),
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
+          return Column(
+            children: [
+              Card(
+                elevation: 4,
+                margin: const EdgeInsets.all(8),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children: [
+                      CachedNetworkImage(
+                        placeholder: (context, url) =>
+                            const CircularProgressIndicator(
+                          color: Colors.amber,
                         ),
-                        const SizedBox(height: 8),
-                        Text(
-                          'Price: \$${product.data?.attributes?.price ?? 0}', // Use a default value, e.g., 0
-                          style: const TextStyle(
-                            fontSize: 14,
-                            color: Colors.black54,
-                          ),
+                        imageUrl:
+                            product.data?.attributes?.image.toString() ?? '',
+                        errorWidget: (context, url, error) => Image.asset(
+                          'lib/images/default-product-image.png',
+                          width: 40,
+                          height: 40,
                         ),
-                      ],
-                    ),
+                        width: 40,
+                        height: 40,
+                      ),
+                      const SizedBox(width: 20),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              product.data?.attributes?.productName ??
+                                  'Unknown Product',
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14,
+                              ),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              'Price: \$${product.data?.attributes?.price ?? 0}', // Use a default value, e.g., 0
+                              style: const TextStyle(
+                                fontSize: 14,
+                                color: Colors.black54,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.remove),
+                        color: Colors.red,
+                        onPressed: () {
+                          if (cartController
+                                  .getQuantityByCartId(int.parse(cart_id)) >
+                              1) {
+                            cartController.incrementOrDecrementQuantity(
+                                cart_id, 'decrement');
+                          }
+                        },
+                      ),
+                      Text(
+                        '${cartController.getQuantityByCartId(int.parse(cart_id))}',
+                        style: const TextStyle(color: Colors.black54),
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.add),
+                        color: Colors.green,
+                        onPressed: () {
+                          cartController.incrementOrDecrementQuantity(
+                              cart_id, 'increment');
+                        },
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.delete),
+                        color: const Color.fromARGB(255, 255, 0, 0),
+                        onPressed: () {
+                          cartController.removeFromCart(cart_id);
+                        },
+                      ),
+                    ],
                   ),
-                  IconButton(
-                    icon: const Icon(Icons.remove),
-                    color: Colors.red,
-                    onPressed: () {
-                      if (cartController.getQuantityByCartId(int.parse(cart_id)) > 1) {
-                        cartController.incrementOrDecrementQuantity(cart_id, 'decrement');
-                      }
-                    },
-                  ),
-                  Text(
-                    '${cartController.getQuantityByCartId(int.parse(cart_id))}',
-                    style: const TextStyle(color: Colors.black54),
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.add),
-                    color: Colors.green,
-                    onPressed: () {
-                      cartController.incrementOrDecrementQuantity(
-                          cart_id, 'increment');
-                    },
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.delete),
-                    color: const Color.fromARGB(255, 255, 0, 0),
-                    onPressed: () {
-                      cartController.removeFromCart(cart_id);
-                    },
-                  ),
-                ],
+                ),
               ),
-            ),
+            ],
           );
         }
       },

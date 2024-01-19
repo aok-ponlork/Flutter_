@@ -2,7 +2,6 @@
 import 'package:e_commerce/controller/token_controller.dart';
 import 'package:e_commerce/models/cart_model.dart';
 import 'package:e_commerce/models/product_model.dart';
-import 'package:e_commerce/models/single_product_model.dart';
 import 'package:e_commerce/service/cart_http_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -16,7 +15,13 @@ class CartController extends GetxController {
     super.onInit();
   }
 
+  double get totalPrice => carts.fold(0, (total, cartItem) {
+        // Calculate the subtotal for each cart item and add it to the total
+        return total +
+            (double.parse(cartItem.product_price) * cartItem.quantity);
+      });
   var carts = [].obs;
+  var total = 0.0.obs;
   var isLoading = true.obs;
   void addToCart(ProductData product, int quantity) async {
     print(product.id);
@@ -137,16 +142,6 @@ class CartController extends GetxController {
       // Set loading state to false regardless of the outcome
       isLoading(false);
     }
-  }
-
-  double calculateTotal(SingleProduct product, int cartId) {
-    // Assuming product price is available in product.data?.attributes?.price
-    double productPrice = product.data?.attributes?.price ?? 0.0;
-    // Get the quantity from your carts list based on the cartId
-    int quantity = getQuantityByCartId(cartId);
-    // Calculate the total price
-    double total = productPrice * quantity;
-    return total;
   }
 
   int getQuantityByCartId(int cartId) {

@@ -4,6 +4,7 @@ import 'package:e_commerce/auth/login.dart';
 import 'package:e_commerce/auth/register.dart';
 import 'package:e_commerce/controller/authentication_controller.dart';
 import 'package:e_commerce/controller/token_controller.dart';
+import 'package:e_commerce/views/cart_page.dart';
 import 'package:e_commerce/views/home_page.dart';
 import 'package:e_commerce/views/intro_page.dart';
 import 'package:flutter/material.dart';
@@ -45,6 +46,7 @@ class MyApp extends StatelessWidget {
         GetPage(name: '/homepage', page: () => HomePage()),
         GetPage(name: '/login', page: () => const LoginPage()),
         GetPage(name: '/register', page: () => const RegisterPage()),
+        GetPage(name: '/cart', page: () => const CartPage()),
       ],
       home: const IntroPage(),
     );

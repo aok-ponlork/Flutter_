@@ -38,8 +38,9 @@ class CartHttpService {
 
   static Future<List<CartData>?> fetchProductInCart(String token) async {
     try {
+      print('asdfasdf');
       final response = await http.get(
-        Uri.parse('${AppConfig.apiURL}/api/cart'),
+        Uri.parse('${AppConfig.apiURL}/api/cart/'),
         headers: {
           'Authorization': 'Bearer $token',
           'Accept': 'application/vnd.api+json',
@@ -50,15 +51,19 @@ class CartHttpService {
         final jsonData = json.decode(response.body);
         final productInCart = Cart.fromJson(jsonData);
         if (productInCart.data != null) {
+          print('asdfasdf');
           return productInCart.data;
         } else {
+          print(response.statusCode);
           throw Exception('No products found in the response body.');
         }
       } else {
+        print(response.statusCode);
         throw Exception(
             'Failed to fetch products from the cart. Status Code: ${response.statusCode}, Response Body: ${response.body[0]}');
       }
     } catch (e) {
+      print('Lrok reeor $e');
       return null;
     }
   }

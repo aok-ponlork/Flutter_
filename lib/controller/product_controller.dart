@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 
 class ProductController extends GetxController {
   var isLoading = true.obs;
-  var productList = <ProductData>[].obs; // Use List<ProductData> instead of List<dynamic>
+  var productList = <ProductData>[].obs;
   @override
   void onInit() {
     fetchProduct();

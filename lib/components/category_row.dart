@@ -20,24 +20,27 @@ class CategoryRow extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
         ),
         child: Container(
+          width: 100,
           height: 50,
           padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
             color: Colors.white, // Use a light background color
             borderRadius: BorderRadius.circular(10),
           ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                category.categoryName.toString(),
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 14,
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  category.categoryName.toString(),
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 14,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

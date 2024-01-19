@@ -1,9 +1,8 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
-
 class PaymentContainer extends StatelessWidget {
-  var totalPrice = 0;
+  String totalPrice;
   PaymentContainer({super.key, required this.totalPrice});
   @override
   Widget build(BuildContext context) {
