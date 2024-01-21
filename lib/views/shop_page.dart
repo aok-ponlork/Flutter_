@@ -1,6 +1,7 @@
 // ignore_for_file: avoid_unnecessary_containers, avoid_print
 import 'package:e_commerce/components/category_row.dart';
 import 'package:e_commerce/components/header_title.dart';
+import 'package:e_commerce/components/product_card.dart';
 import 'package:e_commerce/components/product_cart_horizotal.dart';
 import 'package:e_commerce/components/product_tile.dart';
 import 'package:e_commerce/components/slideshow.dart';
@@ -50,9 +51,9 @@ class ShopPage extends StatelessWidget {
             padding: EdgeInsets.only(top: 20),
             child: SlideshowImages(
               imagePaths: [
-                'lib/images/logo.png',
-                'lib/images/google.png',
-                'lib/images/apple.png',
+                'lib/images/slide1.jpg',
+                'lib/images/slide2.jpg',
+                'lib/images/slide3.jpg',
               ],
             ),
           ),
@@ -133,6 +134,35 @@ class ShopPage extends StatelessWidget {
                       );
                     },
                   ),
+                );
+              }
+            },
+          ),
+          const HeaderTitle(text: 'Special Offers'),
+          Obx(
+            () {
+              if (productController.isLoading.value) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else {
+                return GridView.builder(
+                  shrinkWrap: true, // Add this line
+                  physics:
+                      const NeverScrollableScrollPhysics(), // Add this line
+                  itemCount: productController.productList.length,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2, // Number of items in a row
+                    crossAxisSpacing: 0, // Spacing between columns
+                    mainAxisSpacing: 0, // Spacing between rows
+                    childAspectRatio: 0.7,
+                  ),
+                  itemBuilder: (context, index) {
+                    return ProductCard(
+                      product: productController.productList[index],
+                      addToCart: cartController.addToCart,
+                    );
+                  },
                 );
               }
             },

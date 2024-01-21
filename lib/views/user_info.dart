@@ -1,34 +1,29 @@
-import 'package:e_commerce/components/category_row.dart';
-import 'package:e_commerce/controller/category_controller.dart';
+// ignore_for_file: use_key_in_widget_constructors
+
+import 'package:e_commerce/controller/payment_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class UserInfo extends StatelessWidget {
-  const UserInfo({super.key});
+  const UserInfo({Key? key});
+
   @override
   Widget build(BuildContext context) {
-    final CategoryController controller = Get.put(CategoryController());
+    final PaymentController controller = Get.put(PaymentController());
     return Obx(() {
       if (controller.isLoading.value) {
-        return const Center(
-          child: CircularProgressIndicator(),
-        );
+        return const Center(child: CircularProgressIndicator());
       } else {
-        return SizedBox(
-            height: 100,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: controller.categoryList.length,
-              itemBuilder: (context, index) {
-                return Center(
-                    child: CategoryRow(
-                      onTapFunction: () {
-                        
-                      },
-                  category: controller.categoryList[index],
-                ));
-              },
-            ));
+        return Center(
+          child: Column(
+            children: [
+              ElevatedButton(
+                onPressed: () => controller.initiatePayment(100.0),
+                child: const Text('Click to pay'),
+              ),
+            ],
+          ),
+        );
       }
     });
   }

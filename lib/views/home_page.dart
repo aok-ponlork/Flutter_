@@ -18,7 +18,6 @@ class HomePage extends GetView {
     const OrderedPage(),
     const UserInfo(),
   ];
-
   void navigatorBottomBar(int index) {
     selectedIndex.value = index;
   }
@@ -45,7 +44,7 @@ class HomePage extends GetView {
         ],
       ),
       drawer: const MainDrawer(),
-      backgroundColor:const Color.fromARGB(255, 228, 216, 216),
+      backgroundColor: const Color.fromARGB(255, 233, 222, 229),
       bottomNavigationBar: Obx(
         // Wrap BottomNavBar with Obx
         () => BottomNavBar(
