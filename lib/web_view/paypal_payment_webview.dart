@@ -34,7 +34,7 @@ class _WebViewWithAppBarState extends State<WebViewWithAppBar> {
           // Check if the URL indicates a successful payment, and navigate back if needed
           if (url.startsWith('${AppConfig.apiURL}/api/success?')) {
             // URL parameters to check for success
-            Navigator.pop(context);
+            Get.toNamed('/homepage');
             Get.snackbar(
               'Payment',
               'Success',

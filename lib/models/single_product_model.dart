@@ -51,6 +51,7 @@ class Attributes {
   double? price;
   double? cost;
   int? stockQty;
+  int? saleCount;
   String? description;
   String? image;
   String? createdAt;
@@ -61,6 +62,7 @@ class Attributes {
       this.price,
       this.cost,
       this.stockQty,
+      this.saleCount,
       this.description,
       this.image,
       this.createdAt,
@@ -71,6 +73,7 @@ class Attributes {
     price = json['price'];
     cost = json['cost'];
     stockQty = json['stock_qty'];
+    saleCount = json['sale_count'];
     description = json['description'];
     image = json['image'];
     createdAt = json['created_at'];
@@ -83,6 +86,7 @@ class Attributes {
     data['price'] = price;
     data['cost'] = cost;
     data['stock_qty'] = stockQty;
+    data['sale_count'] = saleCount;
     data['description'] = description;
     data['image'] = image;
     data['created_at'] = createdAt;

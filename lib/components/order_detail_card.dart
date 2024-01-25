@@ -6,9 +6,11 @@ import 'package:cached_network_image/cached_network_image.dart';
 
 class ProductCartInOder extends StatelessWidget {
   final int productId;
+  final int quantity;
   const ProductCartInOder({
     Key? key,
     required this.productId,
+    required this.quantity,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -86,6 +88,13 @@ class ProductCartInOder extends StatelessWidget {
                               ),
                             ),
                           ],
+                        ),
+                      ),
+                      Text(
+                        'Quantity: $quantity', // Use a default value, e.g., 0
+                        style: const TextStyle(
+                          fontSize: 14,
+                          color: Colors.black54,
                         ),
                       ),
                     ],
