@@ -38,7 +38,6 @@ class CartHttpService {
 
   static Future<List<CartData>?> fetchProductInCart(String token) async {
     try {
-      print('asdfasdf');
       final response = await http.get(
         Uri.parse('${AppConfig.apiURL}/api/cart/'),
         headers: {

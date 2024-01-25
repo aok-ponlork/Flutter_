@@ -1,8 +1,6 @@
 // ignore_for_file: avoid_print, library_private_types_in_public_api
 import 'package:e_commerce/components/styles/text_style.dart';
 import 'package:e_commerce/config/env.dart';
-import 'package:e_commerce/controller/cart_controller.dart';
-import 'package:e_commerce/controller/product_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -35,9 +33,6 @@ class _WebViewWithAppBarState extends State<WebViewWithAppBar> {
           print('Page finished loading: $url');
           // Check if the URL indicates a successful payment, and navigate back if needed
           if (url.startsWith('${AppConfig.apiURL}/api/success?')) {
-            final ProductController productController =
-                Get.put(ProductController());
-            final CartController cartController = Get.put(CartController());
             // URL parameters to check for success
             Navigator.pop(context);
             Get.snackbar(
@@ -47,8 +42,7 @@ class _WebViewWithAppBarState extends State<WebViewWithAppBar> {
               colorText: Colors.white, // Text color
               animationDuration: const Duration(seconds: 1),
             ); // Go back to the previous screen
-            productController.fetchProduct();
-            cartController.fetchProductInCart();
+            AppConfig.refreshData();
           } else if (url.startsWith('${AppConfig.apiURL}/api/error?')) {
             Navigator.pop(context);
             Get.snackbar('Cancel payment', 'You have been cancel your Payment!',

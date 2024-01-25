@@ -1,6 +1,19 @@
 // ignore_for_file: constant_identifier_names
 
+import 'package:e_commerce/controller/cart_controller.dart';
+import 'package:e_commerce/controller/order_detail_controller.dart';
+import 'package:e_commerce/controller/product_controller.dart';
+import 'package:get/get.dart';
+
 class AppConfig {
-  static const String apiURL = 'http://192.168.1.8:8000';
-  static const String stripe_key = "pk_test_51Nd43YIBfwHFIugcKLqLkUMPoBsjy6H8K9O9KNZVHdClk2NrjoXB8sWBVM0L9lKWdYJPRwgOxdakvd9hRWPuRuNA00mG9s6o9u";
+  static const String apiURL = 'http://192.168.1.9:8000';
+  static void refreshData() {
+    final ProductController productController = Get.put(ProductController());
+    final CartController cartController = Get.put(CartController());
+    final OrderDetailController orderDetailController =
+        Get.put(OrderDetailController());
+    productController.fetchProduct();
+    cartController.fetchProductInCart();
+    orderDetailController.fetchOrderData();
+  }
 }
