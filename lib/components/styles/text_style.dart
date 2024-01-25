@@ -8,7 +8,7 @@ class CustomTextWidget extends StatelessWidget {
     return Text(
       text,
       style: const TextStyle(
-          fontFamily: 'SpaceMono',
+          fontFamily: 'Roboto',
           fontWeight: FontWeight.bold,
           fontSize: 16.0,
           color: Colors.black87),

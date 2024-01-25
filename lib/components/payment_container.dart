@@ -1,6 +1,7 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
+
 class PaymentContainer extends StatelessWidget {
   String totalPrice;
   PaymentContainer({super.key, required this.totalPrice});
@@ -12,13 +13,13 @@ class PaymentContainer extends StatelessWidget {
           topLeft: Radius.circular(8),
           topRight: Radius.circular(8),
         ),
-        color: Colors.grey,
+        color: Color.fromARGB(255, 220, 217, 217),
       ),
       child: Padding(
         padding: const EdgeInsets.only(bottom: 30, top: 50),
         child: Column(
           children: [
-             Center(
+            Center(
               child: Text(
                 'Total Price: $totalPrice',
                 style: const TextStyle(
@@ -33,7 +34,7 @@ class PaymentContainer extends StatelessWidget {
             ElevatedButton(
               onPressed: () {},
               style: ElevatedButton.styleFrom(
-                backgroundColor: const Color.fromARGB(255, 134, 236, 137),
+                backgroundColor:const Color.fromARGB(255, 46, 45, 45),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
@@ -41,7 +42,7 @@ class PaymentContainer extends StatelessWidget {
               child: const Text(
                 'Pay with Paypal',
                 style: TextStyle(
-                  color: Color.fromARGB(255, 77, 74, 74),
+                  color: Colors.white70,
                 ),
               ),
             ),

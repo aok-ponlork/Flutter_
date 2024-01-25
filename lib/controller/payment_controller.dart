@@ -1,32 +1,32 @@
 // controllers/payment_controller.dart
 // ignore_for_file: avoid_print
+import 'package:e_commerce/components/show_unauthenticated_dialog.dart';
 import 'package:e_commerce/config/env.dart';
+import 'package:e_commerce/service/payment_service.dart';
 import 'package:e_commerce/web_view/paypal_payment_webview.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:url_launcher/url_launcher.dart';
 
 class PaymentController extends GetxController {
   RxBool isLoading = false.obs;
-
   Future<void> initiatePayment(double amount) async {
     try {
       isLoading.value = true;
-
-      const apiUrl = '${AppConfig.apiURL}/api/charge';
-      final response = await http
-          .post(Uri.parse(apiUrl), body: {'amount': amount.toString()});
+      final response = await PaymentService.requestPayment(amount);
 
       if (response.statusCode == 200) {
         final paymentUrl = json.decode(response.body)['redirect_url'];
         await launchPaymentWebView(paymentUrl);
+      } else if (response.statusCode == 401) {
+        DialogService.showUnauthenticatedDialog('Please log in to Buy product it will take less then a minute!');
       } else {
-        // Handle error
         print('Payment initiation failed: ${response.body}');
-        showSnackbar('Payment initiation failed', true);
+        showSnackbar('Payment initiation failed ${response.statusCode}', true);
       }
+    } catch (e) {
+      // Log or handle the error
     } finally {
       isLoading.value = false;
     }

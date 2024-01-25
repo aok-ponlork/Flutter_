@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final authController = Get.put(AuthController());
     MaterialColor customPrimaryColor = const MaterialColor(0xFFFFFBFB, {
-      50: Color(0xFFFFFBFB), // You can define different shades here
+      50: Color(0xFFFFFBFB),
       100: Color(0xFFFFFBFB),
       200: Color(0xFFFFFBFB),
       300: Color(0xFFFFFBFB),

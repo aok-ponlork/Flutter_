@@ -35,7 +35,7 @@ class IntroPage extends StatelessWidget {
             const SizedBox(height: 40),
             //Subtitle
             const Text(
-              'Welcome to our e-commerce haven! 🛍️ Ready to shop till you drop? Explore our vast selection of top-notch products and unbeatable deals. Let\'s buy some things! 🎉',
+              'Welcome to our e-commerce haven! 🛍️ Ready to shop till you drop? Let\'s buy some things! 🎉',
               textAlign: TextAlign.center,
               style:
                   TextStyle(color: Color.fromARGB(255, 101, 101, 101), fontSize: 20),

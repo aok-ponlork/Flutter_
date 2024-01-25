@@ -26,9 +26,11 @@ class ProductCartInCart extends StatelessWidget {
             padding: EdgeInsets.all(8.0),
             child: Column(
               children: [
-                CircularProgressIndicator(),
+                CircularProgressIndicator(
+                  color: Colors.amber,
+                ),
                 SizedBox(height: 8),
-                Text('Loading product details...'),
+                Text('Loading...'),
               ],
             ),
           );

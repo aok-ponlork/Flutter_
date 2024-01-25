@@ -14,6 +14,7 @@ class CartPage extends StatelessWidget {
     final CartController controller = Get.put(CartController());
     final TokenController _tokenController = Get.put(TokenController());
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 233, 222, 229),
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,

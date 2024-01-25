@@ -51,7 +51,6 @@ class CartHttpService {
         final jsonData = json.decode(response.body);
         final productInCart = Cart.fromJson(jsonData);
         if (productInCart.data != null) {
-          print('asdfasdf');
           return productInCart.data;
         } else {
           print(response.statusCode);

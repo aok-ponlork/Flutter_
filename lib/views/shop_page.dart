@@ -24,7 +24,7 @@ class ShopPage extends StatelessWidget {
         children: [
           //search
           Container(
-            margin: const EdgeInsets.symmetric(horizontal: 20),
+            margin: const EdgeInsets.symmetric(horizontal: 10),
             padding: const EdgeInsets.only(left: 20, right: 20),
             decoration: BoxDecoration(
               color: Colors.white,
@@ -57,10 +57,11 @@ class ShopPage extends StatelessWidget {
               ],
             ),
           ),
+          //Category
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 20),
             child: Obx(() {
-              if (productController.isLoading.value) {
+              if (categoryController.isLoading.value) {
                 return const Center(
                   child: CircularProgressIndicator(),
                 );
@@ -74,8 +75,9 @@ class ShopPage extends StatelessWidget {
                         return Center(
                             child: CategoryRow(
                           onTapFunction: () {
-                            categoryController.fetchProductByCategory(
-                                categoryController.categoryList[index]);
+                            // categoryController.fetchProductByCategory(
+                            //     categoryController.categoryList[index]);
+                            Get.toNamed('/product-detail');
                           },
                           category: categoryController.categoryList[index],
                         ));

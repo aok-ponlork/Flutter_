@@ -90,7 +90,7 @@ flutter:
     - family: Roboto
       fonts:
         - asset: lib/fonts/Roboto/Roboto-Black.ttf
-        - asset: lib/fonts/Roboto/Roboto-MediumItalic.ttf
+        - asset: lib/fonts/Roboto/Roboto-Medium.ttf
     - family: SpaceMono
       fonts:
         - asset: lib/fonts/Space_Mono/SpaceMono-Bold.ttf

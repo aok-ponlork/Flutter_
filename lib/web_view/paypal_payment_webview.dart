@@ -8,9 +8,7 @@ import 'package:webview_flutter/webview_flutter.dart';
 
 class WebViewWithAppBar extends StatefulWidget {
   final String url;
-
   const WebViewWithAppBar({Key? key, required this.url}) : super(key: key);
-
   @override
   _WebViewWithAppBarState createState() => _WebViewWithAppBarState();
 }
@@ -23,7 +21,7 @@ class _WebViewWithAppBarState extends State<WebViewWithAppBar> {
     return Scaffold(
       appBar: AppBar(
         title: const CustomTextWidget(text: 'Pay with Paypal.'),
-        backgroundColor: Colors.white, // Set app bar background color
+        backgroundColor: Colors.transparent, // Set app bar background color
         elevation: 0, // Remove app bar shadow
       ),
       body: WebView(
@@ -58,12 +56,11 @@ class _WebViewWithAppBarState extends State<WebViewWithAppBar> {
             Get.snackbar('Cancel payment', 'You have been cancel your Payment!',
                 backgroundColor: Colors.red[400], // Snackbar background color
                 colorText: Colors.white, // Text color
-                animationDuration: const Duration(seconds: 1)
-            );
+                animationDuration: const Duration(seconds: 1));
           }
         },
       ),
-      backgroundColor: Colors.grey[200], // Set the background color of the page
+      backgroundColor: const Color.fromARGB(255, 233, 222, 229),
     );
   }
 }

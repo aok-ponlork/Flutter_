@@ -36,10 +36,10 @@ class HomePage extends GetView {
               },
               icon: const Icon(
                 Icons.shopping_cart,
-                color: Colors.white,
+                color: Colors.black87,
               ),
               label: Obx(
-                () => Text(cartController.carts.length.toString()),
+                () => Text(cartController.carts.length.toString(), style: const TextStyle(color: Colors.black87),),
               ))
         ],
       ),

@@ -1,4 +1,5 @@
 // ignore_for_file: avoid_print, non_constant_identifier_names
+import 'package:e_commerce/components/show_unauthenticated_dialog.dart';
 import 'package:e_commerce/controller/token_controller.dart';
 import 'package:e_commerce/models/cart_model.dart';
 import 'package:e_commerce/models/product_model.dart';
@@ -47,39 +48,7 @@ class CartController extends GetxController {
         print(carts.length.toString());
       } else if (result == 'unauthenticated') {
         // Handle unauthenticated state, maybe redirect to login
-        showDialog(
-          context: Get.context!,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: const Text('Unauthenticated'),
-              content: const Text('Please log in to add products to the cart'),
-              actions: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: Row(
-                    children: [
-                      const Text(
-                        'Close',
-                        style: TextStyle(color: Colors.black54),
-                      ),
-                      TextButton(
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                            Get.toNamed('/login');
-                          },
-                          child: const Text(
-                            'Login now',
-                            style: TextStyle(color: Colors.black54),
-                          )),
-                    ],
-                  ),
-                ),
-              ],
-            );
-          },
-        );
+        DialogService.showUnauthenticatedDialog('Please log in to add products to the cart');
       } else {
         Get.snackbar('Failed', 'Failed to add product to cart!',
             backgroundColor: Colors.red);
@@ -90,7 +59,6 @@ class CartController extends GetxController {
   Future<void> fetchProductInCart() async {
     isLoading(true);
     try {
-      print('nannanana');
       final cartItem = await CartHttpService.fetchProductInCart(
           _tokenController.token.value);
       if (cartItem != null) {
