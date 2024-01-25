@@ -18,7 +18,7 @@ class UserInfo extends StatelessWidget {
           child: Column(
             children: [
               ElevatedButton(
-                onPressed: () => controller.initiatePayment(100.0),
+                onPressed: () => controller.initiatePayment(false, 100.0, ''), //IsfastBuy and amount
                 child: const Text('Click to pay'),
               ),
             ],

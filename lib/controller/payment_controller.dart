@@ -11,16 +11,16 @@ import 'package:url_launcher/url_launcher.dart';
 
 class PaymentController extends GetxController {
   RxBool isLoading = false.obs;
-  Future<void> initiatePayment(double amount) async {
+  Future<void> initiatePayment(bool isFastBuy, double amount, String productID) async {
     try {
       isLoading.value = true;
-      final response = await PaymentService.requestPayment(amount);
-
+      final response = await PaymentService.requestPayment(isFastBuy, amount, productID);
       if (response.statusCode == 200) {
         final paymentUrl = json.decode(response.body)['redirect_url'];
         await launchPaymentWebView(paymentUrl);
       } else if (response.statusCode == 401) {
-        DialogService.showUnauthenticatedDialog('Please log in to Buy product it will take less then a minute!');
+        DialogService.showUnauthenticatedDialog(
+            'Please log in to Buy product it will take less then a minute!');
       } else {
         print('Payment initiation failed: ${response.body}');
         showSnackbar('Payment initiation failed ${response.statusCode}', true);

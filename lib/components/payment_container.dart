@@ -1,12 +1,15 @@
 // ignore_for_file: must_be_immutable
 
+import 'package:e_commerce/controller/payment_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class PaymentContainer extends StatelessWidget {
   String totalPrice;
   PaymentContainer({super.key, required this.totalPrice});
   @override
   Widget build(BuildContext context) {
+    final PaymentController paymentController = Get.put(PaymentController());
     return Container(
       decoration: const BoxDecoration(
         borderRadius: BorderRadius.only(
@@ -21,10 +24,10 @@ class PaymentContainer extends StatelessWidget {
           children: [
             Center(
               child: Text(
-                'Total Price: $totalPrice',
+                'Total Price:  $totalPrice',
                 style: const TextStyle(
                   fontSize: 18,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.normal,
                 ),
               ),
             ),
@@ -32,15 +35,22 @@ class PaymentContainer extends StatelessWidget {
               height: 20,
             ),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                // Remove the dollar sign from the total price
+                String sanitizedTotalPrice = totalPrice.replaceAll('\$', '');
+                // Parse the sanitized total price as a double
+                double parsedTotalPrice = double.parse(sanitizedTotalPrice);
+                // Now, use the parsedTotalPrice in your initiatePayment method
+                paymentController.initiatePayment(false, parsedTotalPrice, '');
+              },
               style: ElevatedButton.styleFrom(
-                backgroundColor:const Color.fromARGB(255, 46, 45, 45),
+                backgroundColor: const Color.fromARGB(255, 46, 45, 45),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
               ),
               child: const Text(
-                'Pay with Paypal',
+                'Check out',
                 style: TextStyle(
                   color: Colors.white70,
                 ),

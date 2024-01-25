@@ -1,7 +1,8 @@
 // ignore_for_file: avoid_print, library_private_types_in_public_api
-
 import 'package:e_commerce/components/styles/text_style.dart';
 import 'package:e_commerce/config/env.dart';
+import 'package:e_commerce/controller/cart_controller.dart';
+import 'package:e_commerce/controller/product_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -14,8 +15,6 @@ class WebViewWithAppBar extends StatefulWidget {
 }
 
 class _WebViewWithAppBarState extends State<WebViewWithAppBar> {
-  bool pageLoaded = false;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,18 +29,15 @@ class _WebViewWithAppBarState extends State<WebViewWithAppBar> {
         onPageStarted: (String url) {
           // This callback is called when the WebView starts loading a new page
           print('Page started loading: $url');
-          setState(() {
-            pageLoaded = false;
-          });
         },
         onPageFinished: (String url) {
           // This callback is called when the WebView finishes loading a page
           print('Page finished loading: $url');
-          setState(() {
-            pageLoaded = true;
-          });
           // Check if the URL indicates a successful payment, and navigate back if needed
           if (url.startsWith('${AppConfig.apiURL}/api/success?')) {
+            final ProductController productController =
+                Get.put(ProductController());
+            final CartController cartController = Get.put(CartController());
             // URL parameters to check for success
             Navigator.pop(context);
             Get.snackbar(
@@ -51,6 +47,8 @@ class _WebViewWithAppBarState extends State<WebViewWithAppBar> {
               colorText: Colors.white, // Text color
               animationDuration: const Duration(seconds: 1),
             ); // Go back to the previous screen
+            productController.fetchProduct();
+            cartController.fetchProductInCart();
           } else if (url.startsWith('${AppConfig.apiURL}/api/error?')) {
             Navigator.pop(context);
             Get.snackbar('Cancel payment', 'You have been cancel your Payment!',
