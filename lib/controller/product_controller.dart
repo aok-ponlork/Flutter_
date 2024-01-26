@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: avoid_print, non_constant_identifier_names
 
 import 'package:e_commerce/models/product_model.dart';
 import 'package:e_commerce/service/product_http_service.dart';
@@ -10,6 +10,7 @@ class ProductController extends GetxController {
   var mostSaleCount = <ProductData>[].obs;
   var specialProduct = <ProductData>[].obs;
   var newProduct = <ProductData>[].obs;
+  var productByCategory_id = <ProductData>[].obs;
 
   @override
   void onInit() {
@@ -38,8 +39,14 @@ class ProductController extends GetxController {
     // Sort the productList based on the saleCount attribute
     productList.sort((a, b) =>
         (b.attributes?.saleCount ?? 0).compareTo(a.attributes?.saleCount ?? 0));
-
     // Take the top 8 products with the highest sale count
     mostSaleCount.value = productList.take(8).toList();
+  }
+
+  void getProductByCategoryID(int categoryID) {
+    // Filter the productList to get products with the specified categoryID
+    productByCategory_id.value = productList
+        .where((product) => product.relationship?.categoryId == categoryID)
+        .toList();
   }
 }

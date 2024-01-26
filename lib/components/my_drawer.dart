@@ -31,14 +31,17 @@ class MainDrawer extends StatelessWidget {
                   color: Colors.grey[100],
                 ),
               ),
-              const Padding(
-                padding: EdgeInsets.only(left: 25),
+              Padding(
+                padding: const EdgeInsets.only(left: 25),
                 child: ListTile(
-                  leading: Icon(
+                  onTap: () {
+                    Get.toNamed('/');
+                  },
+                  leading: const Icon(
                     Icons.home,
                     color: Colors.white,
                   ),
-                  title: Text(
+                  title: const Text(
                     'Home',
                     style: TextStyle(color: Colors.white),
                   ),
@@ -48,7 +51,7 @@ class MainDrawer extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 25),
                 child: ListTile(
                   onTap: () {
-                    Get.toNamed('/login');
+                    Get.toNamed('/about');
                   },
                   leading: const Icon(
                     Icons.info_outline,

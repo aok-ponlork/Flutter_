@@ -3,13 +3,18 @@ import 'dart:io';
 
 import 'package:e_commerce/config/env.dart';
 import 'package:e_commerce/controller/cart_controller.dart';
+import 'package:e_commerce/controller/order_detail_controller.dart';
 import 'package:e_commerce/controller/token_controller.dart';
+import 'package:e_commerce/controller/user_controller.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
 class AuthService {
   static final TokenController _tokenController = Get.find<TokenController>();
   static final CartController _cartController = Get.put(CartController());
+  static final UserController _userController = Get.put(UserController());
+  static final OrderDetailController _orderDetailController =
+      Get.put(OrderDetailController());
   static Future<String?> login(String email, String password) async {
     try {
       final response = await http.post(
@@ -27,6 +32,8 @@ class AuthService {
         final String token = responseBody['data']['token'];
         _tokenController.updateToken(token);
         _cartController.fetchProductInCart();
+        _userController.fetchUserInfo();
+        _orderDetailController.fetchOrderData();
         return null; // No error message, login successful
       } else {
         // Return the error message
@@ -85,6 +92,8 @@ class AuthService {
       if (response.statusCode == 200) {
         final String token = responseBody['data']['token'];
         _tokenController.updateToken(token);
+        _cartController.clearCart();
+        _userController.fetchUserInfo();
         return 'Register success!';
       } else {
         return 'Register failed: ${responseBody['message']}';

@@ -9,6 +9,7 @@ import 'package:e_commerce/components/slideshow.dart';
 import 'package:e_commerce/controller/cart_controller.dart';
 import 'package:e_commerce/controller/category_controller.dart';
 import 'package:e_commerce/controller/product_controller.dart';
+import 'package:e_commerce/views/show_product_by_category.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -86,14 +87,19 @@ class ShopPage extends StatelessWidget {
                       scrollDirection: Axis.horizontal,
                       itemCount: categoryController.categoryList.length,
                       itemBuilder: (context, index) {
+                        final category = categoryController.categoryList[index];
                         return Center(
                             child: CategoryRow(
                           onTapFunction: () {
-                            // categoryController.fetchProductByCategory(
-                            //     categoryController.categoryList[index]);
-                            Get.toNamed('/product-detail');
+                            productController
+                                .getProductByCategoryID(category.categoryId);
+                            Get.to(() => ShowProductByCategory(
+                                  productByCategory: productController
+                                      .productByCategory_id
+                                      .toList(),
+                                ));
                           },
-                          category: categoryController.categoryList[index],
+                          category: category,
                         ));
                       },
                     ));

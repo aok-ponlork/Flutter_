@@ -72,6 +72,8 @@ class ProductSearchDelegate extends SearchDelegate<ProductData> {
     return IconButton(
       icon: const Icon(Icons.arrow_back),
       onPressed: () {
+        // Close the keyboard
+        FocusScope.of(context).unfocus();
         close(context, ProductData());
       },
     );

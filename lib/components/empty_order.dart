@@ -14,8 +14,8 @@ class EmptyOrder extends StatelessWidget {
         children: [
           Lottie.asset(
             'lib/animation/empty_order.json',
-            width: 300,
-            height: 300,
+            width: 350,
+            height: 350,
             onLoaded: (composition) {
               // Animation is loaded successfully.
             },

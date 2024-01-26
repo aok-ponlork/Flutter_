@@ -20,8 +20,8 @@ class CartPage extends StatelessWidget {
         elevation: 0,
       ),
       body: Obx(() {
-        final hasToken = _tokenController.token.value.isEmpty;
-        if (hasToken) {
+        final dontHaveToken = _tokenController.token.value.isEmpty;
+        if (dontHaveToken) {
           return const EmptyCart();
         }
         if (controller.isLoading.value) {
