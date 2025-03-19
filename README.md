@@ -1,7 +1,3 @@
-Here’s an updated version of your README for the e-commerce Flutter project:
-
----
-
 # e_commerce
 
 This is a project with Flutter that connects to my Laravel API for my Mobile Application, developed during my academic year.
