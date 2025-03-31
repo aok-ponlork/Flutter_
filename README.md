@@ -21,7 +21,7 @@ To get started with this project, follow these steps:
 1. **Clone the repository**
 
     ```bash
-    git clone https://github.com/yourusername/e_commerce.git
+    git clone https://github.com/aok-ponlork/Flutter_.git
     ```
 
 2. **Flutter Setup**
